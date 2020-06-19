@@ -7,6 +7,10 @@ class CommentForm extends Component {
     body: "",
   };
 
+  reset = () => {
+    this.setState({ author: "", body: "" });
+  };
+
   handleInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -18,22 +22,9 @@ class CommentForm extends Component {
       body: this.state.body,
     };
 
-    fetch("/api/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newComment),
-    })
-      .then((response) => response.json())
-      .then((newComment) => {
-        store.dispatch({
-          type: "COMMENT_ADDED",
-          payload: { newComment },
-        });
-      });
-
-    this.setState({ author: "", body: "" });
+    this.props.onSubmit(newComment, () => {
+      this.reset();
+    });
   };
 
   render() {

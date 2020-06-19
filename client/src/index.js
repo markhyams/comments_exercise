@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import CommentApp from "./components/CommentApp";
 import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import store from "./lib/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CommentApp />
+    <Provider store={store}>
+      <CommentApp />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
